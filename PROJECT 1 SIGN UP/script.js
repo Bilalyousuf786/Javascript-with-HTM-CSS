@@ -52,6 +52,8 @@ form.addEventListener('submit', function(e){
     if(email.value === ''){
         // alert('Email is required');
         showError(email, 'Email is required');
+    } else if(!isValidEmail(email.value)){
+        showError(email, 'Email is invalid')
     }
     else{
         showError(email);
