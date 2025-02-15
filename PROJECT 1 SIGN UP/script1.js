@@ -30,30 +30,54 @@ function isValidEmail(email){
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
 }
-// Function to check required fields have data
-function checkRequired(inputArray){
-    inputArray.forEach(function(input){
-        if(input.value === ''){
-            console.log(input.id);
-            showError(input,`${getFieldId(input)} is requried`);
-        }
-        else {
-            showSuccess(input);
-        }
-    });
-}
-// Function to get the ID of the input fields with proper case
-function getFieldId(input){
-    // return input.id.toUpperCase();
-    return input.id.charAt(0).toUpperCase() + input.id.slice(1);
-}
 // Event Listeners
 // Create Event Listener Button
 form.addEventListener('submit', function(e){
 
     // stop page from reloading on submit
     e.preventDefault();
-    
-    checkRequired([username, email, password, confirmPassword]);
+    //console.log(username.value);
+
+    // Check if username is empty
+    if(username.value === ''){
+        // alert('Username is required');
+        showError(username, 'Username is required');
+    }
+    else{
+        showError(username);
+        //console.log(username.value);
+    }
+
+    // Check if email is empty
+    if(email.value === ''){
+        // alert('Email is required');
+        showError(email, 'Email is required');
+    } else if(!isValidEmail(email.value)){
+        showError(email, 'Email is invalid')
+    }
+    else{
+        showError(email);
+        //console.log(email.value);
+    }
+
+    // Check if password is empty
+    if(password.value === ''){
+        // alert('Password is required');
+        showError(password, 'Password is required');
+    }
+    else{
+        showError(password);
+        //console.log(password.value);
+    }
+
+    // Check if confirm-password is empty
+    if(confirmPassword.value === ''){
+        // alert('confirmPassword is required');
+        showError(confirmPassword, 'confirmPassword is required');
+    }
+    else{
+        showError(confirmPassword);
+        //console.log(confirmPassword.value);
+    }
 });
 
