@@ -26,9 +26,15 @@ function showSuccess(){
     formControl.className = 'form-control success';
 }
 // Function to check if email is valid
-function isValidEmail(email){
+function checkEmail(input){
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
+    //return re.test(String(email).toLowerCase());
+    if(re.test(input.value.trim())){
+        showSuccess(input);
+    }
+    else{
+        showError(input, `${getFieldId(input)} is not a valid email`);
+    }
 }
 // Function to check required fields have data
 function checkRequired(inputArray){
@@ -41,6 +47,25 @@ function checkRequired(inputArray){
             showSuccess(input);
         }
     });
+}
+// Function to check lenght of input field
+function checkLength(input, min, max){
+    if(input.value.lenght<min){
+        showError(input, `${getFieldId(input)} needs to be atleast ${min} characters`);
+    }
+    else if(input.value.lenght > max){
+        showError(input, `${getFieldId(input)} needs to be less then ${max} characters`);
+    }
+    else{
+        showSuccess(input);
+    }
+}
+
+//Function to check if password and confirm password match
+function checkPasswordsMatch(input1,input2){
+    if(input1.value !== input2.value){
+        showError(input2, "Passwords don't match");
+    }
 }
 // Function to get the ID of the input fields with proper case
 function getFieldId(input){
@@ -55,5 +80,9 @@ form.addEventListener('submit', function(e){
     e.preventDefault();
     
     checkRequired([username, email, password, confirmPassword]);
+    checkLength(username,3,10);
+    checkLength(password,6,30);
+    checkEmail(email);
+    checkPasswordsMatch(password, confirmPassword);
 });
 
